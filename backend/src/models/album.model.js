@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Song } from "./song.model";
+
 
 
 const albumSchema = new mongoose.Schema({
@@ -14,7 +14,7 @@ const albumSchema = new mongoose.Schema({
     },
 
     imageUrl:{
-        type:string,
+        type:String,
         required:true,
 
     },
@@ -32,4 +32,4 @@ const albumSchema = new mongoose.Schema({
     }]
 },{timestamps:true})
 
-export default album = mongoose.model("Album",albumSchema)
+export const Album = mongoose.model("Album",albumSchema)
