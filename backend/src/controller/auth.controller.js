@@ -20,7 +20,7 @@ export const authCallback = async (req,res) =>{
         res.status(200).json({success:true})
         
     } catch (error) {
-        res.status(500).json({message:"Internal user creation error",error})
+        next(error)
         
     }
 
