@@ -9,22 +9,26 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-function AuthCallBackPage() {
+
+const AuthCallBackPage = () => {
   const navigate = useNavigate()
-   const {isLoaded,user}  = useUser()
+   const {isSignedIn,isLoaded,user}  = useUser()
 
   useEffect(
     ()=>{
       const syncUser = async()=>{
+        if(!user || !isLoaded || !isSignedIn){
+          console.log("returhned")
+          return;
+        }
         try {
+          console.log("is signed in ",isSignedIn)
+          console.log("isLoaded",isLoaded)
           console.log("is this undefined",user)
           
           // syncAttempted.current = true
 
-          if(!user || !isLoaded){
-            console.log("returhned")
-            return;
-          }
+         
           await axiosInstance.post("/auth/callback",
             {id:user.id,
             firstName:user.firstName,
@@ -43,7 +47,7 @@ function AuthCallBackPage() {
         }
       }
       syncUser()
-    },[isLoaded,user,navigate]
+    },[isLoaded,isSignedIn,user,navigate]
 
   )
   return (

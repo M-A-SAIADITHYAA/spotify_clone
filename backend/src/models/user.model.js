@@ -7,7 +7,7 @@ fullName:{
     required:true,
 
 },
-imageURL:{
+imageUrl:{
     type:String,
     required:true,
 },

@@ -26,7 +26,7 @@ const __dirname = path.resolve()
 app.use(express.json())
 app.use(clerkMiddleware()) // 
 app.use(cors({
-    origin: "http://localhost:3000/",
+    origin: "http://localhost:3000",
     Credential:true,
 
 }))
