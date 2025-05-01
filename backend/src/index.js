@@ -14,6 +14,7 @@ import songRoutes from "./routes/song.route.js"
 import albumsRoutes from "./routes/albums.route.js"
 import statsRoutes from "./routes/stats.route.js"
 import { clerkMiddleware } from '@clerk/express'
+import cors from "cors"
 
 const app = express()
 const PORT = process.env.PORT
@@ -24,6 +25,11 @@ const __dirname = path.resolve()
 
 app.use(express.json())
 app.use(clerkMiddleware()) // 
+app.use(cors({
+    origin: "http://localhost:3000/",
+    Credential:true,
+
+}))
 app.use(fileUpload({
     useTempFiles:true,
     tempFileDir:path.join(__dirname,"tmp"),
