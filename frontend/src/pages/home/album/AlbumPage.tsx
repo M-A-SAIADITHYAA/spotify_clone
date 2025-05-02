@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useMusicStore } from "@/stores/useMusicStore";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock, Play, PlayIcon } from "lucide-react";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -78,6 +78,7 @@ const AlbumPage = () => {
               </Button>
             </div>
             <div className="bg-black/20">
+            <ScrollArea>
               <Table className="border-separate border-spacing-0">
                 <TableHeader>
                   <TableRow>
@@ -124,6 +125,7 @@ const AlbumPage = () => {
                   ))}
                 </TableBody>
               </Table>
+              </ScrollArea>
             </div>
           </div>
         </div>
