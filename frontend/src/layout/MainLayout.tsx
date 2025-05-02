@@ -23,12 +23,12 @@ function MainLayout() {
 
         <ResizableHandle className="w-2 bg-blend-lighten transition-colors"/>
         <ResizablePanel defaultSize={20} minSize={0}  maxSize={25} collapsedSize={0} >
-            friends activity 
+           
 
         </ResizablePanel>
     </ResizablePanelGroup>
 
-    //MainLayout
+    
 
    </div>
   )
