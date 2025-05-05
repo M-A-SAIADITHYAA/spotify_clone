@@ -2,13 +2,14 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useChatStore } from '@/stores/useChatStores'
 import { useUser } from '@clerk/clerk-react'
-import { HeadphoneOffIcon, HeadphonesIcon, Users } from 'lucide-react'
+import { HeadphoneOffIcon, HeadphonesIcon, Music, Users } from 'lucide-react'
 import React, { useEffect } from 'react'
 
 const FriendsActivity = () => {
 
     const {users,isLoading,error,fetchUsers} = useChatStore()
     const {user} = useUser()
+    const isPlaying = true
         
 
     useEffect(()=>{
@@ -45,8 +46,17 @@ const FriendsActivity = () => {
                                 <div className="flex-1 min-w-0 ">
                                     <div className="flex items-center gap-2">
                                     <span className='font-medium text-sm text-white'>{user1.fullName}</span>
+
                                     </div>
+                                    {isPlaying && <Music className='size-3.5 text-emerald-300 shrink-0'/> }
                                 </div>
+
+                                {isPlaying ? (<div className='mt-1'>
+                                      <div className='mt-1 text-sm Itext-white font-medium truncate'>Cardigan</div>
+                                    <div className='text-xs ☐ text-zinc-400 truncate'>by Taylor Swift</div>
+                                    </div>
+) :(
+<div className='mt-1 text-xs text-zinc-400'>Idle</div>)}
                         </div>
                     </div>
                     </div>
