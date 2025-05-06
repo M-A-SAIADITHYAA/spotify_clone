@@ -1,4 +1,6 @@
+import { ScrollArea } from "@/components/ui/scroll-area"
 import Topbar from "@/components/ui/Topbar.jsx"
+import FeaturedSection from "@/layout/componenets/FeaturedSection"
 import { useMusicStore } from "@/stores/useMusicStore"
 import { useEffect } from "react"
 
@@ -22,7 +24,15 @@ function HomePage() {
 
 
   return (
-    <div><Topbar/></div>
+    <div><Topbar/>
+    <ScrollArea className="h-full">
+      <div className=""></div>
+    <FeaturedSection/>
+
+    </ScrollArea>
+    
+    </div>
+    
   )
 }
 

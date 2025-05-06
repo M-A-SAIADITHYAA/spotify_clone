@@ -13,7 +13,7 @@ function Topbar() {
     const {isAdmin} = useAuthStore()
     
   return (
-    <div className='flex items-center justify-between top-0 bg-zinc-700/75 backdrop:blur-md z-10 gap-4'>
+    <div className='flex items-center justify-between top-0 bg-zinc-700/75 backdrop:blur-md z-10 gap-4 p-4 rounded-md'>
         <div className="flex gap-2 items-center">
         <img src="/spotify.png"  className="size-12 m-3" alt="" />
 

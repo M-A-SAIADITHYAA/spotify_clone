@@ -77,7 +77,7 @@ fetchMadeForUSongs:async()=>{
     })
     try {
         const response = await axiosInstance.get("/songs/featured")
-        set({featuredSongs:response.data})
+        set({madeForUSongs:response.data})
         
     } catch (error:any) {
         set({error:error.response.data.message})
@@ -92,7 +92,7 @@ fetchfeaturedSongs:async()=>{
         error:null
     })
     try {
-        const response = await axiosInstance.get("/songs/made-for-u")
+        const response = await axiosInstance.get("/songs/featured")
         set({featuredSongs:response.data})
         
     } catch (error:any) {
@@ -110,7 +110,7 @@ fetchtrendingSongs:async()=>{
     })
     try {
         const response = await axiosInstance.get("/songs/trending")
-        set({featuredSongs:response.data})
+        set({trendingSongs:response.data})
         
     } catch (error:any) {
         set({error:error.response.data.message})
