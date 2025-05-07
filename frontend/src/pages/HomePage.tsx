@@ -27,7 +27,7 @@ function HomePage() {
 
   return (
     <div className=""><Topbar/>
-    <ScrollArea className="h-full ">
+    <ScrollArea className='h-screen'>
       <div className="p-4 sm:p-6">
        
         <h1 className="text-4xl font-extrabold text-pink-500 drop-shadow-lg tracking-wider animate-pulse font-mono">
@@ -43,7 +43,7 @@ function HomePage() {
       </div>
     
 
-    </ScrollArea>
+    </ScrollArea >
     
     </div>
     

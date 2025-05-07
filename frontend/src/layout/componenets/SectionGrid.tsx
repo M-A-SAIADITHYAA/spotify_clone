@@ -1,6 +1,7 @@
 import SectionGridSkeleton from '@/components/skeletons/SectionGridSkeleton'
 import { Button } from '@/components/ui/button'
 import { Song } from '@/types'
+import { PlayCircle } from 'lucide-react'
 import React from 'react'
 
 type SectionGridProps = {
@@ -18,6 +19,7 @@ const SectionGrid = ({title,songs,isLoading}:SectionGridProps) => {
         <Button variant='link' className='text-sm text-zinc-700 hover:bg-red-400'>
           Show all
         </Button>
+        </div>
         <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-4'>
           {songs.map((song)=>(
             <div
@@ -27,10 +29,13 @@ const SectionGrid = ({title,songs,isLoading}:SectionGridProps) => {
                 <div className="aspect-square rounded-md shadow-lg overflow-hidden">
                   <img src={song.imageUrl} alt="" className='w-full aspect-square transition-transform duration-200 group-hover:scaled-110' />
                 </div>
+              </div>  
+              <h3 className='font-medium mb-2 truncate'>{song.title}</h3>
+						<p className='text-sm text-zinc-400 truncate'>{song.artist}</p>
               </div>
-            </div>
+
           ))}
-        </div>
+        
       </div>
 
     </div>
