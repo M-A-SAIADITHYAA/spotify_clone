@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Clock, Play, PlayIcon } from "lucide-react";
+import { Clock, Music, Play, PlayIcon } from "lucide-react";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -11,7 +11,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
+;
+// const {currentAlbum} = useMusicStore()
+
+// import {} from usePlayerStore
+import { usePlayerStore } from "@/stores/usePlayerStore"
 
 const  formatDuration = (duration:number)=>{
     const minutes = Math.floor(duration/60)
@@ -19,9 +24,14 @@ const  formatDuration = (duration:number)=>{
     return `${minutes}:${sec}`
 } 
 
+
 const AlbumPage = () => {
   const { albumId } = useParams();
+  const {isPlaying,currentSong,playAlbum,togglePlay} = usePlayerStore()
+
   const { fetchAlbumById, currentAlbum, isLoading } = useMusicStore();
+
+
 
   useEffect(() => {
     if (albumId) fetchAlbumById(albumId);
@@ -30,6 +40,24 @@ const AlbumPage = () => {
   if (isLoading) {
     return null;
   }
+
+  const handlePlayAlbum = () => {
+if (!currentAlbum) return;
+const isCurrentAlbumPlaying = currentAlbum?.songs.some ((song) => song._id=== currentSong?._id);
+if (isCurrentAlbumPlaying) togglePlay();
+else {
+// start playing the album from the beginning
+playAlbum(currentAlbum?.songs, 0);
+}
+  }
+  const handlePlaySong = (index:number) =>{
+
+  if(!currentAlbum){
+    return 
+  }
+
+  playAlbum(currentAlbum?.songs,index)
+}
 
   return (
     <div className="h-full">
@@ -71,6 +99,7 @@ const AlbumPage = () => {
             
             <div className="flex px-6 pb-4 items-center gap-6">
               <Button
+              onClick={handlePlayAlbum}
                 size="icon"
                 className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-400 hover: scale-105 transition-all"
               >
@@ -91,17 +120,25 @@ const AlbumPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody >
-                  {currentAlbum?.songs.map((song, index) => (
-                    <TableRow className="group hover:bg-zinc-700" key={song._id}>
-                        <PlayIcon className="p-1 pb-1 m-3  hidden group-hover:flex justify-center items-center h-6 w-6 "/>
-                      <TableCell className="  flex  items-center w-5 group-hover:hidden">{index + 1} 
-                        
-                        
-                      </TableCell>
+                  {currentAlbum?.songs.map((song, index) => {
+                    const iscurrentSong = currentSong?._id == song?._id
+                    return(
+                    <TableRow className="group hover:bg-zinc-700" key={song._id} onClick={()=> handlePlaySong(index)}>
+                       <TableCell className="w-5">
+          {iscurrentSong && isPlaying ? (
+            <Music className="p-1 pb-1 m-3 hidden group-hover:flex justify-center items-center h-6 w-6" />
+          ) : (
+            <span className="group-hover:hidden">{index + 1}</span>
+          )}
+          {!iscurrentSong && (
+            <PlayIcon className="p-1 pb-1 m-3 hidden group-hover:flex justify-center items-center h-6 w-6" />
+          )}
+        </TableCell>
+                      
                       
 
                       
-                      <TableCell className="p-0">
+                      <TableCell className="p-0" >
                         <div className="flex flex-row w-full h-full items-center">
                           <img src={song.imageUrl} className="size-10 m-2" />
                           
@@ -122,7 +159,7 @@ const AlbumPage = () => {
                       </TableCell>
                       <TableCell>{formatDuration(song.duration)}</TableCell>
                     </TableRow>
-                  ))}
+)})}
                 </TableBody>
               </Table>
               </ScrollArea>

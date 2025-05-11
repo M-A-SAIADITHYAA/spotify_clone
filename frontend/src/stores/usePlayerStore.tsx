@@ -74,7 +74,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     }
   },
   playPrevious: () => {
-    const {currentIndex,queue} = get(),
+    const {currentIndex,queue} = get()
     const prevIndex = currentIndex-1
     if(prevIndex>=0)
     {

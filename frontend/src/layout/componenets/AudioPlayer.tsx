@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 const AudioPlayer = () => {
 
     const audioRef = useRef<HTMLAudioElement>(null)
-    const prevSongRef = useRef<HTMLAudioElement>(null)
+    const prevSongRef = useRef<string | null>(null)
 
     const {currentSong,isPlaying,playNext} = usePlayerStore()
 
@@ -25,18 +25,25 @@ const AudioPlayer = () => {
     },[playNext])
 
     useEffect(()=>{
-        const audio = audioRef.current
         if(!audioRef.current || !currentSong) return
+        const audio = audioRef.current
+        console.log(audio)
         const isSongChange = prevSongRef.current !== currentSong?.audioUrl
         if(isSongChange){
             audio.src = currentSong?.audioUrl
             audio.currentTime = 0
             prevSongRef.current = currentSong?.audioUrl
+
+              audio.play().catch((err) => {
+      if (err.name !== "AbortError") {
+        console.error("Audio play error:", err);
+      }
+    });
         }
 
-    },[])
+    },[currentSong])
   return (
-    <div>AudioPlayer</div>
+    <audio ref={audioRef} />
   )
 }
 
