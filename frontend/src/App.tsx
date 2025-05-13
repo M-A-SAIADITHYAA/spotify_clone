@@ -10,6 +10,7 @@ import MainLayout from './layout/MainLayout.js'
 import Chatpage from './pages/chat/Chatpage.js'
 import AlbumPage from './pages/home/album/AlbumPage.js'
 import AdminPage from './pages/admin/AdminPage.js'
+import {Toaster} from "react-hot-toast"
 
 function App() {
   
@@ -27,9 +28,11 @@ function App() {
             <Route path = '/chat' element= {<Chatpage/>}/>
             <Route path = '/albums/:albumId' element= {<AlbumPage/>}/>
         </Route>
+        
 
 
       </Routes>
+      <Toaster/>
     </>
   )
 }

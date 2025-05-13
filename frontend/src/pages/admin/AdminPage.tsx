@@ -17,15 +17,16 @@ const AdminPage = () => {
     const {fetchSongs,fetchStats,fetchAlbums}= useMusicStore()
      
     
-    if(!isAdmin && !isLoading) return <div>
-        NOT an admin
-    </div>
+    
     useEffect(()=>{
         fetchSongs(),
         fetchStats(),
         fetchAlbums()
         
     },[fetchAlbums,fetchSongs,fetchStats])
+    if(!isAdmin && !isLoading) return <div>
+        NOT an admin
+    </div>
 
     
   return (

@@ -71,7 +71,7 @@ export const deleteSong = async (req,res,next)=>{
 
         //if song is in album 
         if(song.albumId){
-            await Album.findbyIdAndUpdate(song.albumId,{
+            await Album.findByIdAndUpdate(song.albumId,{
                 $pull:{song:song._id},
             }
             )
