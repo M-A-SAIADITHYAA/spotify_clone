@@ -5,7 +5,21 @@ import { ResizablePanelGroup ,ResizablePanel, ResizableHandle} from '@/component
 import LeftSideBar from './componenets/LeftSideBar.js'
 import FriendsActivity from './componenets/FriendsActivity.js'
 import AudioPlayer from './componenets/AudioPlayer.js'
+import PlayBackControl from './PlayBackControl.js'
+import { useEffect, useState } from 'react'
 function MainLayout() {
+
+  const [isMobile,setisMObile] = useState(false)
+
+  useEffect(()=>{
+    const checkMobile = ()=>{
+      setisMObile(window.innerWidth<800)
+
+    }
+    checkMobile()
+    window.addEventListener("resize",checkMobile)
+    return () => window.removeEventListener("resize",checkMobile)
+  })
 
     
 
@@ -24,12 +38,17 @@ function MainLayout() {
    <Outlet/>
         </ResizablePanel>
 
-        <ResizableHandle className="w-2 bg-blend-lighten transition-colors"/>
+        {!isMobile && (
+          <>
+          <ResizableHandle className="w-2 bg-blend-lighten transition-colors"/>
         <ResizablePanel defaultSize={20} minSize={0}  maxSize={25} collapsedSize={0} >
            
           <FriendsActivity/>
         </ResizablePanel>
+        </>
+        )}
     </ResizablePanelGroup>
+    <PlayBackControl/>
 
     
 

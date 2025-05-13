@@ -1,12 +1,14 @@
 import SectionGridSkeleton from '@/components/skeletons/SectionGridSkeleton'
 import { Button } from '@/components/ui/button'
 import { Song } from '@/types'
-import { PlayCircle } from 'lucide-react'
-import React from 'react'
+import PlayButton from './PlayButton'
+
+
 
 type SectionGridProps = {
   title:string,
-  songs:Song[]
+  songs:Song[],
+  isLoading:boolean
 }
 
 const SectionGrid = ({title,songs,isLoading}:SectionGridProps) => {
@@ -29,12 +31,19 @@ const SectionGrid = ({title,songs,isLoading}:SectionGridProps) => {
                 <div className="aspect-square rounded-md shadow-lg overflow-hidden">
                   <img src={song.imageUrl} alt="" className='w-full aspect-square transition-transform duration-200 group-hover:scaled-110' />
                 </div>
+                
+                
               </div>  
-              <h3 className='font-medium mb-2 truncate'>{song.title}</h3>
-						<p className='text-sm text-zinc-400 truncate'>{song.artist}</p>
-              </div>
-
-          ))}
+              <div className="flex items-start gap-2 relative">
+  <PlayButton song={song} />
+  <div>
+    <h3 className='font-medium'>{song.title}</h3>
+    <h2>dd</h2>
+    <p className='text-sm text-zinc-400'>{song.artist}</p>
+  </div>
+</div>
+</div>
+))}
         
       </div>
 

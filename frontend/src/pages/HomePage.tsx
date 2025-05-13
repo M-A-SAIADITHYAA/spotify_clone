@@ -3,6 +3,7 @@ import Topbar from "@/components/ui/Topbar.jsx"
 import FeaturedSection from "@/layout/componenets/FeaturedSection"
 import SectionGrid from "@/layout/componenets/SectionGrid"
 import { useMusicStore } from "@/stores/useMusicStore"
+import { usePlayerStore } from "@/stores/usePlayerStore"
 import { useEffect } from "react"
 
 
@@ -18,10 +19,16 @@ function HomePage() {
     fetchtrendingSongs()
 
   },[])
-  console.log({trendingSongs})
-  console.log(error)
-  console.log({madeForUSongs})
-  console.log({featuredSongs})
+ 
+  const {initializeQueue}= usePlayerStore()
+
+  useEffect(()=>{
+    if(madeForUSongs.length>0 && featuredSongs.length>0 && trendingSongs.length>0){
+      const songs = [...madeForUSongs,...featuredSongs,...trendingSongs]
+      initializeQueue(songs)
+    }
+
+  },[initializeQueue,madeForUSongs,trendingSongs,featuredSongs])
 
 
 

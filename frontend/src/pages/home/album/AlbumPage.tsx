@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Clock, Music, Play, PlayIcon } from "lucide-react";
+import { Clock, Music, Pause, Play, PlayIcon } from "lucide-react";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -18,7 +18,7 @@ import {
 // import {} from usePlayerStore
 import { usePlayerStore } from "@/stores/usePlayerStore"
 
-const  formatDuration = (duration:number)=>{
+export const  formatDuration = (duration:number)=>{
     const minutes = Math.floor(duration/60)
     const sec = duration%60
     return `${minutes}:${sec}`
@@ -103,7 +103,14 @@ playAlbum(currentAlbum?.songs, 0);
                 size="icon"
                 className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-400 hover: scale-105 transition-all"
               >
-                <Play className="h-7 w-7 text-black"></Play>
+                
+                {isPlaying && currentAlbum?.songs.some((song)=>song._id === currentSong?._id)?
+                (
+                  <Pause className="h-7 w-7 text-black"/>
+                ):(
+                  <Play className="h-7 w-7 text-black"></Play>
+                )
+                }
               </Button>
             </div>
             <div className="bg-black/20">
