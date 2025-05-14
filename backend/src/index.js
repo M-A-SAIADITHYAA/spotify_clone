@@ -2,7 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 
 import { connectdb } from "./lib/db.js"
-dotenv.config()
+
 
 
 import fileUpload from "express-fileupload"
@@ -15,13 +15,15 @@ import albumsRoutes from "./routes/albums.route.js"
 import statsRoutes from "./routes/stats.route.js"
 import { clerkMiddleware } from '@clerk/express'
 import cors from "cors"
+import { createServer } from "http"
+dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT
 
 const __dirname = path.resolve()
 
-
+console.log("DEBUG:", process.env.CLOUDINARY_API_KEY);
 
 app.use(express.json())
 app.use(clerkMiddleware()) // 
@@ -30,6 +32,8 @@ app.use(cors({
     Credential:true,
 
 }))
+
+const httpServer = createServer(app)
 app.use(fileUpload({
     useTempFiles:true,
     tempFileDir:path.join(__dirname,"tmp"),

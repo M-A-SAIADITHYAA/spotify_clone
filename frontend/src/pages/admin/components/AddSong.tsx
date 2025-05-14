@@ -11,11 +11,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { axiosInstance } from "@/lib/axios";
 import { useMusicStore } from "@/stores/useMusicStore";
 
 import { Plus, Upload } from "lucide-react";
 
-import React, { useRef, useState } from "react";
+import  { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 const AddSong = () => {
   const { albums } = useMusicStore();
@@ -40,7 +42,64 @@ const AddSong = () => {
   const audioImputRef = useRef<HTMLInputElement>(null);
   const imageImputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+
+    setisLoading(true)
+    
+    try {
+     if(!files.audio || !files.image){
+        return toast.error("Upload image and audio file");
+        
+      }
+      
+
+      const formData = new FormData()
+
+      formData.append("title",newSong.title)
+      formData.append("artist",newSong.artist)
+      formData.append("duration",newSong.duration)
+
+      if(newSong.album && newSong.album!=="none"){
+        formData.append("albumId",newSong.album)
+      }
+      
+
+      formData.append("audioFile",files.audio)
+      formData.append("imageFile",files.image)
+
+      await axiosInstance.post("/admin/songs",formData,{
+        headers:{
+          "Content-Type":"multipart/form-data"
+        }
+      })
+
+      setNewSong({
+        title:"",
+        artist:"",
+        album:"",
+        duration:"0"
+      })
+
+      setFiles({
+        audio:null,
+        image:null
+      }
+
+      )
+            toast.success("successfully added the song")
+           
+
+      
+    } catch (error) {
+      console.log(error)
+      toast.error("Error uploading song ")
+      
+    } finally{
+
+      setisLoading(false)
+
+    }
+  };
   return (
     
     <Dialog open={songDialoagOpen} onOpenChange={setsongDialogOpen}>
@@ -153,18 +212,18 @@ const AddSong = () => {
 
 					<div className='space-y-2'>
 						<label className='text-sm font-medium'>Album (Optional)</label>
-						<Select
+						<Select 
 							value={newSong.album}
 							onValueChange={(value) => setNewSong({ ...newSong, album: value })}
 						>
 							<SelectTrigger className='bg-zinc-800 border-zinc-700'>
 								<SelectValue placeholder='Select album' />
 							</SelectTrigger>
-							<SelectContent className='bg-zinc-800 border-zinc-700'>
+							<SelectContent className='bg-zinc-800 border-zinc-700 text-white'>
 								<SelectItem value='none'>No Album (Single)</SelectItem>
 								{albums.map((album) => (
 									<SelectItem key={album._id} value={album._id}>
-										{album.title}
+										{album.title} 
 									</SelectItem>
 								))}
 							</SelectContent>
@@ -172,7 +231,7 @@ const AddSong = () => {
 					</div>
 				
                 <DialogFooter>
-					<Button variant='outline' onClick={() => setSongDialogOpen(false)} disabled={isLoading}>
+					<Button variant='outline' onClick={() => setsongDialogOpen(false)} disabled={isLoading}>
 						Cancel
 					</Button>
 					<Button onClick={handleSubmit} disabled={isLoading}>
